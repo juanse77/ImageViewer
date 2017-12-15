@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import model.Image;
@@ -26,11 +24,13 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
     @Override
     public void show(Image imagen) {
         this.currentImage = imagen;
+        this.removeAll();
         this.repaint();
     }
 
     @Override
-    public void paint(Graphics g){
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
         if (currentImage == null) {
             return;
         }

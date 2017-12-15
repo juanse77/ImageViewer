@@ -4,21 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
-import model.Image;
-import persistence.FileImageLoader;
 import ui.ImageDisplay;
 import ui.SwingImageDisplay;
 
-public class MainFrame extends JFrame {
+public final class MainFrame extends JFrame {
 
     private ImageDisplay imageDisplay;
 
@@ -26,7 +19,7 @@ public class MainFrame extends JFrame {
         
         this.setTitle("Image Viewer");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(400, 300);
         this.setLocationRelativeTo(null);
         this.getContentPane().add(imageDisplay());
         this.getContentPane().add(toolBar(), BorderLayout.SOUTH);

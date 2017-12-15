@@ -41,7 +41,7 @@ public final class FileImageLoader implements ImageLoader {
 
             @Override
             public Image next() {
-                if(i == fotos.length){
+                if(i == fotos.length - 1){
                     return imageAt(0);
                 }else{
                     return imageAt(i + 1);
