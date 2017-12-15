@@ -1,43 +1,67 @@
 package persistence;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import model.Image;
 
-public class FileImageLoader implements Image, ImageLoader {
+public final class FileImageLoader implements ImageLoader {
+
     private File[] fotos;
+
+    public FileImageLoader(File dir) {
+        fotos = dir.listFiles(imageType());
+    }
+
+    public FileFilter imageType() {
+        return new FileFilter() {
+
+            @Override
+            public boolean accept(File file) {
+                return file.getName().toLowerCase().endsWith(".jpg");
+            }
+
+        };
+    }
+
+    public Image imageAt(final int i) {
+        return new Image() {
+            @Override
+            public String name() {
+                return fotos[i].getName();
+            }
+
+            @Override
+            public InputStream stream() throws FileNotFoundException {
+                return new BufferedInputStream(new FileInputStream(fotos[i]));
+            }
+
+            @Override
+            public Image next() {
+                if(i == fotos.length){
+                    return imageAt(0);
+                }else{
+                    return imageAt(i + 1);
+                }
+            }
+
+            @Override
+            public Image prev() {
+                if(i == 0){
+                    return imageAt(fotos.length - 1);
+                }else{
+                    return imageAt(i - 1);
+                }
+            }
+        };
+    }
     
-    public FileFilter imageType(){
-        
-    }
-    
-    public Image imageAt(){
-        
-    }
-
-    @Override
-    public String name() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public InputStream stream() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Image next() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Image prev() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public Image load() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return imageAt(0);
     }
+
 }
